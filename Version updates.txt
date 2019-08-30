@@ -1,0 +1,131 @@
+v3.1: Pin [Steven]
+	-After much chagrin, pin functionality has been added, which allows the stats of a creature to be visible on the main window of the inititive GUI. Currently, the window auto-adjusts for only
+	one pin. More pins can be added, but window size must be adjusted manually. There is also currently no way to remove a pin (since that part of the code wasn't working yet).  Adding a pin
+	correctly updates the flag for the popup stats, so there shouldn't be a pop up to display the creature's stats on their turn.
+	-Added a setting to determine the order that creatures appear on pop out GUIs.
+	-Fixed a bug when adding a creature without using bestiary info.
+
+v3.0.1: Small updates [Steven]
+	-Healing functionality has been added, which includes temporary hit points.
+	-Repeated stat GUI popups have been eliminated.
+	-Added display for Turn Count to keep track of duration of combat.
+
+v3.0: Preliminary GUI [Steven]
+   - Basic Initiative GUI is now functional. Allows for adding and individual creature, adding a group of minions, adding a preset (with associated settings), damaging    creatures, removing creatures, and printing stats for monsters. Bestiary functionality is available. 
+   - Functionality to be added: healing, effects(?), notes(?), lair effects, more try-catching...
+   - Many aesthethic changes can (and should) be done: preventing repeated stat GUI popups, improving spacing, add colouring to improve clarity and readability, 
+   reorganising the buttons on the main window, filling extra space in main window....
+
+v2.2.2: Minor tweaks
+   - 'add' function now allows you to add one of the presets to the initiative (so monsters can be entered into initiative first). Note that this will reset current
+    player initiatives if they are already in the initiative order.
+   - 'damage' function now checks if healing brings a monster above the max HP, and lowers the healing accordingly.
+   - Made columns looks prettier when it displays the initiative.
+v2.2.1: Preparatory damage option change + minor tweaks [Jeff]
+   - Added vulnerability (v), resistance (r), thresholds (t) and healing (h) to the Damage option
+   - Damage can now be rolled (e.g. 2d6 is a valid input)
+   - Creatures' current HP now includes a percentage to quickly estimate relative survival and HP-dependent combat options
+   - Section to track changes we'd like to make to the script in future (0.2)
+   - Expanded options for campaign/preset reference
+   - "Lair" option for terrain, environment or initiative count effects (also allows for having multiple lair events added at once)
+
+v2.2: Bestiary fixes and notes [Steven and Jeff]
+   - Fixed bestiary isseus that caused certain properties not to load correctly. Also added character detection to replace weird html characters.
+   - Added 'notes' function to easily add or delete a note for a creature. The notes appear on the bottom during the creature's turn.
+   - Added a check for CurrentTurn to make sure Jeff stops breaking the code.... I mean so that you can't damage or remove creatures before starting the turn tracker.
+
+v2.1: Bestiary and Effects[Steven and Jeff]
+   - Can now load monster info from HTML files into a Bestiary dictionary. This automatically inputs the dexterity modifier
+     for the creature, as well as displays the traits and actions that creature can take during its turn.
+   - Added 'AddBestiary' (in a separate file. Based on existing code by Jeff) to extract
+     relevant info from HTML files and organise it into a dictionary.  In the same file is the 'PrintStats' function,
+     that displays the stats, traits, and actions for the creature.
+     Note: the 'AddBestiary' function does not load all info correctly. In particular, immunities are not loaded correctly.
+           Will (probably) be fixed later.
+   - Can also enter effects for creatures, including description, duration (with auto-updating turn counter, or normal text)
+   - Added 'AddEffect', 'RemoveEffect', and 'PrintEffects' functions, which do obvious things ;)
+
+v2.0.1: Bug fixes [Steven]
+   - Corrected names.
+   - Damage now appears immediately (instead of next round/ next Combatant list update)
+   - Added functionality for 'Remove' function to allow for removing multiple enemies simultaneously.
+
+v2.0: Data restructuring [Steven, with help from Jeff]
+   - Massive overhaul of code to change the base data structures into a dictionary instead of a list. Modifications were made to
+     almost every function to accomodate the change (including InitiativeRoll, DisplayInitiative, UpdateLog, Presets section, 
+     remove, next, add, minions, and damage). Added new functions Initialise (creates Combatants list from base dictionary), 
+     AddToInitiative (adds creature to Combatants list and adjusts turn count if necessary), and Remove (removes creature from 
+     initiative and adjusts turn count if necessary).
+   - 'Remove' function (in the Initiative part of the code) now adjusts turn count properly.
+   - Initiative display now indicates maximum HP of monsters (for descriptive purposes).
+   - Added 'turn' function to say who's turn it currently is (without updating turn count).
+   - Code now asks if you want to use a preset (which have been programmed in for us) right at the start. Consequently the 
+     initiative part of the script has been set to run when you start the script.
+   - Code clean up: removed antiquated functions and branches, cleaned up ordering for some inputs (to reduce repeated code),
+    changed some functions to recognise blank inputs (for [likely] default options), removed lair actions that were 
+    included by default (can be added using 'Add' function [set to player]), removed file path in log, clarified some text
+    (e.g. names for minions not needing to be Roll20 colours). That might be it, but there's probably other stuff too.
+
+v1.6: Basic tracking [Steven]
+   - Added basic turn-based tracking and printing
+   -'Next' function now behaves differently depending on if it's the end of the round or not
+   - Changed 'Add' and 'Minion' functions to sort combat order when they are added, and modify current turn count if needed
+
+v1.5.2: Bug fixes [Steven]
+   - Secondary sort for initiative ties now works correctly
+   - Keyword combatants now asks for initiative rolls if the length is less than 4, instead of simply 'not equal 4'
+   - Minor aesthetic fixes 
+
+v1.5.1: Presets and minor fixes [Steven]
+   - Added code for using preset options (as keyword parameter 'Combatants')
+   - Log now includes non-player HP values
+   - Fixed the missing '\n' that was bugging me in the options ;)
+
+v1.4.7: Fixes and random HP [Steven]
+   - 'Damage' function will now work regardless of capitalisation.
+   - 'Next' function now adds a secondary sort for First-Time initiative.
+   - Added 'HPCalc' function to input random HP for creatures (using 'Add' or 'Minions'). 
+     Includes the option for a minimum HP.
+
+
+v1.4.6: Timesave [Steven]
+   - Added 'Minions' option to add a bunch of identical monsters to the initiative. Names are generated automatically using Roll20 colours and numbers.
+     HP values can be inputted separately for each monster.
+
+v1.4.5: quick update [Jeff]
+   - Removal can now be done either by matching a substrict or matching the whole string
+
+v1.4.4: quick update [Jeff]
+   - Change to the 'Roll' function to compute (dis)adv internally and to output the value
+
+v1.4.3: Some updates [Steven]
+   - 'Damage' option asks to remove combatants individually instead of removing all non-positive HP values
+   - Auto-kill option modified
+   - Options displayed at beginning are now in alphabetical order (yes, it WAS bugging me that you put "roll" in the middle)
+
+v1.4: Some updates [Jeff]
+   - TryCatching implemented
+   - Optional autoremoval for death ('kill')
+   - Functions: Adv, Disadv, Roll
+   - Initiative() now includes a roll option
+
+v1.3: HP tracker [Steven]
+   - Initiative tracker now supports non-player hit point tracking
+   - Added 'Damage' option to reduce hit points
+   - 'Next' option now automatically removes dead creatures from initiative
+
+v1.2.1: Some updates [Jeff]
+   - Log can now be checked at the end of the function
+
+ v1.2: Some updates [Steven]
+   - Initiative for non-players now rolls correct number of times
+   - Initiative for players now automatically rolls for turns past the first (if joining combat late)
+   - Changed description for Combatant[3] in question for 'Add' section
+
+v1.1: Some updates [Jeff]
+   - Logging implemented
+   - 'Repetition' issue corrected
+   - Commenting added
+   - General tweaks, aesthetic changes
+
+v1.0: Fully functioning version [Steven]
