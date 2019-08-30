@@ -1,0 +1,2 @@
+# Initiative-Script
+Python-based initiative script for dungeons and dragons. Features a graphical user interface for easy viewing of the initiative order, and the ability to randomise the initiative order by adding a bonus to the existing total. Also includes additional functionality useful for dungeon masters during combat, such as hit points tracking, automatic damage and healing calculations, and monster statistics display.
